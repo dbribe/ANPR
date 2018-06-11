@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="712f7935-7205-4ece-8433-d80f9c97dfb9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/car_license_font.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/generate_input.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model-last.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model.h5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ANPR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ANPR.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/compute_roi.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/compute_roi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plate_recognition.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/plate_recognition.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/generate_input.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/generate_input.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,8 +43,8 @@
           <file leaf-file-name="generate_input.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/code/generate_input.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="492">
-                  <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+                <state relative-caret-position="477">
+                  <caret line="68" column="24" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
                   </folding>
@@ -621,8 +613,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/code/generate_input.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        <state relative-caret-position="477">
+          <caret line="68" column="24" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

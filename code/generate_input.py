@@ -40,10 +40,10 @@ def build_data(count, type='', show_only=True):
             img = brightness.enhance(1 + random.random() * 0.8)
             contrast = ImageEnhance.Contrast(img)
             img = contrast.enhance(2)
-            img = img.rotate(random.random() * 9 - 4.5, expand=0)
+            img = img.rotate(random.random() * 10 - 5, expand=0)
             a = 1
             b = 0
-            c = -random.random() * 5.5  # left/right (i.e. 5/-5)
+            c = random.random() * 7 - 3  # left/right (i.e. 5/-5)
             d = 0
             e = 1
             f = -random.random() * 3
@@ -56,7 +56,7 @@ def build_data(count, type='', show_only=True):
             brightness = ImageEnhance.Brightness(img)
             img = brightness.enhance(1 + (random.random() * 3 - 1) * 0.2)
             contrast = ImageEnhance.Contrast(img)
-            img = contrast.enhance(1 + (random.random() * 2 - 1) * 0.4)
+            img = contrast.enhance(1 + (random.random() * 2 - 1) * 0.2)
             img = img.filter(ImageFilter.GaussianBlur(0.1 + random.random() * 0.65))
             if show_only:
                 img.show()
@@ -65,5 +65,5 @@ def build_data(count, type='', show_only=True):
 
 # build_data(10, 'test/')
 
-build_data(100, 'test7/', False)
-build_data(5000, 'train7/', False)
+build_data(100, 'test8/', False)
+build_data(5000, 'train8/', False)
