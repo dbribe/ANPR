@@ -61,7 +61,7 @@ def build_data(count, type='', show_only=True):
             img = contrast.enhance(1 + (random.random() * 2 - 1) * 0.6)
 
             img = img.resize((128, 64), Image.LANCZOS)
-            img = img.filter(ImageFilter.GaussianBlur(0.1 + random.random() * 0.4))
+            img = img.filter(ImageFilter.GaussianBlur(0.1 + random.random() * 0.45))
             if show_only:
                 img.show()
             else:
@@ -69,5 +69,5 @@ def build_data(count, type='', show_only=True):
 
 # build_data(10, 'test/')
 
-build_data(100, 'test10/', False)
-build_data(5000, 'train10/', False)
+build_data(100, 'test11/', False)
+build_data(5000, 'train11/', False)
