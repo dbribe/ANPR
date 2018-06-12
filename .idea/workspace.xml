@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="712f7935-7205-4ece-8433-d80f9c97dfb9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/code/generate_input.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/generate_input.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/model-best-old.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/model-last.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/model5.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/model7.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/model8.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -224,6 +229,11 @@
               <item name="dataset" type="462c0819:PsiDirectoryNode" />
               <item name="plate" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ANPR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ANPR" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -249,6 +259,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/models" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data/license_plates/test2" />
       <recent name="$PROJECT_DIR$/code" />
@@ -353,8 +364,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.3296593" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3296593" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49940476" visible="true" weight="0.3296593" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17559524" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49940476" visible="true" weight="0.3296593" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17559524" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.3297619" />
