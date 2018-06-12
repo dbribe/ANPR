@@ -40,7 +40,7 @@ def build_data(count, type='', show_only=True):
             img = brightness.enhance(1 + random.random() * 0.8)
             contrast = ImageEnhance.Contrast(img)
             img = contrast.enhance(2)
-            img = img.rotate(random.random() * 12 - 6, expand=1)
+            img = img.rotate(random.random() * 14 - 7, expand=1)
             # a = 1
             # b = 0
             # c = -1 -random.random() * 5  # left/right (i.e. 5/-5)
@@ -48,9 +48,9 @@ def build_data(count, type='', show_only=True):
             # e = 1
             # f = -random.random() * 3
             # img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
-            img = img.crop((int((random.random() * 2 - 1.7) * 12), int((random.random() * 2 - 1.5) * 4),
-                            int(128 - (random.random() * 2 - 1.5) * 9), int(64 - (random.random() * 2 - 1.5) * 4)))
-            img = img.filter(ImageFilter.GaussianBlur(0.9 + random.random() * 0.6))
+            img = img.crop((int((random.random() * 2 - 1.7) * 12), int((random.random() * 2 - 1.5) * 6),
+                            int(128 - (random.random() * 2 - 1.5) * 9), int(64 - (random.random() * 2 - 1.6) * 7)))
+            img = img.filter(ImageFilter.GaussianBlur(0.9 + random.random() * 0.8))
 
             brightness = ImageEnhance.Brightness(img)
             # img = img.resize((128, 64), Image.LANCZOS)
@@ -58,7 +58,7 @@ def build_data(count, type='', show_only=True):
             brightness = ImageEnhance.Brightness(img)
             img = brightness.enhance(1 + (random.random() * 3 - 1) * 0.2)
             contrast = ImageEnhance.Contrast(img)
-            img = contrast.enhance(1 + (random.random() * 2 - 1) * 0.5)
+            img = contrast.enhance(1 + (random.random() * 2 - 1) * 0.6)
 
             img = img.resize((128, 64), Image.LANCZOS)
             img = img.filter(ImageFilter.GaussianBlur(0.1 + random.random() * 0.4))
@@ -69,5 +69,5 @@ def build_data(count, type='', show_only=True):
 
 # build_data(10, 'test/')
 
-build_data(100, 'test9/', False)
-build_data(5000, 'train9/', False)
+build_data(100, 'test10/', False)
+build_data(5000, 'train10/', False)
