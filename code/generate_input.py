@@ -1,4 +1,5 @@
 import random
+import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -69,5 +70,18 @@ def build_data(count, type='', show_only=True):
 
 # build_data(10, 'test/')
 
-build_data(100, 'test11/', False)
-build_data(5000, 'train11/', False)
+# build_data(100, 'test11/', False)
+# build_data(5000, 'train11/', False)
+
+# DIR_PATH = 'dataset/plate/train6/'
+#
+# path_files = os.listdir(DIR_PATH)
+# random.shuffle(path_files)
+# path_files = path_files[:9]
+#
+# print(path_files)
+#
+# for file in path_files:
+#     print(file)
+#     img = Image.open(DIR_PATH + file)
+#     img.show()
