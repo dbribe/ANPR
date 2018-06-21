@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import queue
+from recognize import single_decode
 from PIL import Image, ImageEnhance
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -9,11 +10,13 @@ from config import MERGE_STRIDE, REGION_THRESHOLD, LIGHT_THRESHOLD, REGION_STRID
     ROI_LIGHT_THRESHOLD, ROI_AVG_THRESHOLD
 
 cnt = 0
+tot_rects = 0
 def main():
 
 
     def compute_roi(A, img):
         global cnt
+        global tot_rects
         # A = gaussian_filter(A, 2)
         visited = np.zeros(np.shape(A))
         B = A
@@ -22,9 +25,9 @@ def main():
         max_queue_size = height * width
 
 
-        fig, ax = plt.subplots(1)
+        fig, ax = plt.subplots(2)
         plt.gray()
-        ax = [ax]
+        # ax = [ax]
         rect_count = 0
         # ax.imshow(A)
 
@@ -50,7 +53,7 @@ def main():
                         for l in range(j, j+mr):
                             if k >= 0 and k < height and l >= 0 and l < width:
                                 B[i][j] = min(max(B[i][j], A[k][l] * 1.3), 1)
-        ax[0].imshow(B)
+        ax[0].imshow(img)
         st = REGION_STRIDE
 
         for ii in range((int)(height / st)):
@@ -118,13 +121,34 @@ def main():
                         print(nxa, nya, nxb, nyb, img.size[0], img.size[1])
                         cropped = img.crop((nxa, nya, nxb, nyb))
                         cropped = cropped.resize((128, 64), Image.LANCZOS)
+                        cropped = np.asarray(cropped)
+                        cR = cropped[:, :, 0]
+                        cG = cropped[:, :, 1]
+                        cB = cropped[:, :, 2]
+                        cropped = np.maximum(np.maximum(cR, cG), cB)
+                        cropped = cropped[:, :] / 255
+                        imsh = cropped
+                        cropped = np.flip(np.rot90(cropped, -1), 1)
+                        cropped = np.expand_dims(cropped, axis=2)
+                        val = single_decode(cropped)
+                        print(val)
                         cnt += 1
-                        cropped.save('/Users/Dragonite/Programming/Repos/ANPR/crops/crp' + str(cnt) + '.png')
-                        rect = Rectangle((xa, ya), xb - xa, yb - ya, edgecolor='b', fill=False)
-                        ax[0].add_patch(rect)
-                        rect_count += 1
+                        begins_alpha = str.isalpha(val[0])
+                        ends_alpha = str.isalpha(val[-1])
+                        has_digit = 0
+                        for a in val:
+                            if str.isdigit(a):
+                                has_digit += 1
+                        # cropped.save('/Users/Dragonite/Programming/Repos/ANPR/crops/crp' + str(cnt) + '.png')
+                        if begins_alpha and ends_alpha and has_digit >= 2 and has_digit <= 3 and len(val) >= 6 and len(val) <= 7:
+                            rect = Rectangle((xa, ya), xb - xa, yb - ya, edgecolor='springgreen', fill=False)
+                            ax[0].add_patch(rect)
+                            ax[1].imshow(imsh)
+                            rect_count += 1
         print(rect_count)
-        plt.show()
+        tot_rects += rect_count
+        # plt.show()
+        plt.close()
 
     def show_compute_roi(image_path):
         img = Image.open(image_path)
@@ -140,22 +164,29 @@ def main():
 
         orig_img = img = contrast.enhance(contrast_ratio)
 
-        bw = ImageEnhance.Color(orig_img)
-        orig_img = bw.enhance(0)
+        # bw = ImageEnhance.Color(orig_img)
+        # orig_img = bw.enhance(0)
+        #
+        # sharp = ImageEnhance.Sharpness(orig_img)
+        # orig_img = sharp.enhance(0.5)
+        #
+        # brightness = ImageEnhance.Brightness(orig_img)
+        # orig_img = brightness.enhance(2)
+        #
+        # o_contrast = ImageEnhance.Contrast(orig_img)
+        # orig_img = o_contrast.enhance(2)
+        #
+        # sharp = ImageEnhance.Sharpness(orig_img)
+        # orig_img = sharp.enhance(2)
 
-        sharp = ImageEnhance.Sharpness(orig_img)
-        orig_img = sharp.enhance(0.5)
+        # img = np.asarray(img)
+        # R = img[:, :, 0]
+        # G = img[:, :, 1]
+        # B = img[:, :, 2]
+        # img2 = (np.minimum(np.minimum(R, G), B) + np.maximum(np.maximum(R, G), B))
+        # img = img2
 
-        brightness = ImageEnhance.Brightness(orig_img)
-        orig_img = brightness.enhance(2)
 
-        o_contrast = ImageEnhance.Contrast(orig_img)
-        orig_img = o_contrast.enhance(2)
-
-        sharp = ImageEnhance.Sharpness(orig_img)
-        orig_img = sharp.enhance(2)
-
-        img = np.asarray(img)
         img = np.dot(img, [0.299, 0.587, 0.114])
         final_image = np.array(img)
         final_image = gaussian_filter(final_image, (np.size(final_image) ** 0.2) / 100)
@@ -172,7 +203,12 @@ def main():
     #     show_compute_roi('huge' + str(i) + '.jpg')
     for filename in os.listdir('photos/'):
         show_compute_roi('photos/' + filename)
+    # show_compute_roi('pic.png')
+    # for filename in os.listdir('crops/'):
+    #     if filename[0] != '.':
+    #         show_compute_roi('crops/' + filename)
 
+    print(tot_rects)
 
 if __name__ == "__main__":
     main()
