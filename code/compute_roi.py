@@ -11,12 +11,16 @@ from config import MERGE_STRIDE, REGION_THRESHOLD, LIGHT_THRESHOLD, REGION_STRID
 
 cnt = 0
 tot_rects = 0
+PLOT = True
+
 def main():
 
 
     def compute_roi(A, img):
         global cnt
+        global PLOT
         global tot_rects
+        cnt += 1
         # A = gaussian_filter(A, 2)
         visited = np.zeros(np.shape(A))
         B = A
@@ -24,9 +28,9 @@ def main():
         width = np.size(A,1)
         max_queue_size = height * width
 
-
-        fig, ax = plt.subplots(2)
-        plt.gray()
+        if PLOT:
+            fig, ax = plt.subplots(3)
+            plt.gray()
         # ax = [ax]
         rect_count = 0
         # ax.imshow(A)
@@ -34,26 +38,18 @@ def main():
         # ax[1].imshow(B)
         mr = MERGE_STRIDE
 
-        light_threshold_position = (int) (0.6 * np.size(A, 0) * np.size(A, 1))
-        dark_threshold_position = (int) (0.5 * np.size(A, 0) * np.size(A, 1))
-        light_threshold = np.partition(np.reshape(A, np.size(A, 0) * np.size(A, 1)), light_threshold_position)[light_threshold_position]
-        dark_threshold = np.partition(np.reshape(A, np.size(A, 0) * np.size(A, 1)), dark_threshold_position)[dark_threshold_position]
-
-        print(light_threshold, dark_threshold)
-
-        light_threshold -= 0.05
-        dark_threshold += 0.05
+        # print(light_threshold, dark_threshold)
 
         light_threshold = LIGHT_THRESHOLD
 
-        for i in range(height):
-            for j in range(width):
+        for i in range(2,height-2):
+            for j in range(2,width-2):
                 if A[i][j] > light_threshold:
-                    for k in range(i, i+mr):
-                        for l in range(j, j+mr):
-                            if k >= 0 and k < height and l >= 0 and l < width:
-                                B[i][j] = min(max(B[i][j], A[k][l] * 1.3), 1)
-        ax[0].imshow(img)
+                    B[i][j] = min(np.amax(A[i-mr+1:i+mr, j-mr+1:j+mr]) * 1.3, 1)
+
+        if PLOT:
+            ax[0].imshow(img)
+            ax[2].imshow(B)
         st = REGION_STRIDE
 
         for ii in range((int)(height / st)):
@@ -75,6 +71,10 @@ def main():
                     count = 1
                     ignored_count = 0
                     total = 0
+                    xc1 = j
+                    yc1 = i
+                    xc2 = j
+                    yc2 = i
                     while not qx.empty() and not qy.empty():
                         # print('eliminated')
                         xc = qx.get()
@@ -101,7 +101,12 @@ def main():
                             yb = max(yb, yn)
                             mi = min(mi, B[yn][xn])
                             ma = max(ma, B[yn][xn])
-
+                            if yn - xn > yc1 - xc1:
+                                yc1 = yn
+                                xc1 = xn
+                            if yn + xn > yc2 + xc2:
+                                yc2 = yn
+                                xc2 = xn
                     # print('adding rect')
                     # print(xb-xa, yb-ya)
                     rect_width = xb - xa
@@ -117,10 +122,16 @@ def main():
                         nxa = int(xa / width * img.size[0])
                         nxb = int(xb / width * img.size[0])
                         nya = int(ya / height * img.size[1])
-                        nyb = int(yb / height * img.size[1])
-                        print(nxa, nya, nxb, nyb, img.size[0], img.size[1])
+                        nyb = int(yb/ height * img.size[1])
+                        # print(nxa, nya, nxb, nyb, img.size[0], img.size[1])
                         cropped = img.crop((nxa, nya, nxb, nyb))
+                        cropped = cropped.rotate(np.arctan((yc2 - yc1) / (xc2 - xc1)) / np.pi * 180, expand=0)
+                        smth = int(abs(yc2 - yc1) / (yb - ya) * (nyb - nya) * .3)
+                        print("smth is", smth)
+                        print(nxa, nya, nxb, nyb)
+                        cropped = cropped.crop((0, smth, (nxb - nxa), (nyb - nya) - smth))
                         cropped = cropped.resize((128, 64), Image.LANCZOS)
+                        cropped = gaussian_filter(cropped, 0.8)
                         cropped = np.asarray(cropped)
                         cR = cropped[:, :, 0]
                         cG = cropped[:, :, 1]
@@ -132,7 +143,8 @@ def main():
                         cropped = np.expand_dims(cropped, axis=2)
                         val = single_decode(cropped)
                         print(val)
-                        cnt += 1
+                        if len(val) < 1:
+                            continue
                         begins_alpha = str.isalpha(val[0])
                         ends_alpha = str.isalpha(val[-1])
                         has_digit = 0
@@ -141,54 +153,58 @@ def main():
                                 has_digit += 1
                         # cropped.save('/Users/Dragonite/Programming/Repos/ANPR/crops/crp' + str(cnt) + '.png')
                         if begins_alpha and ends_alpha and has_digit >= 2 and has_digit <= 3 and len(val) >= 6 and len(val) <= 7:
-                            rect = Rectangle((xa, ya), xb - xa, yb - ya, edgecolor='springgreen', fill=False)
-                            ax[0].add_patch(rect)
-                            ax[1].imshow(imsh)
+                            if PLOT:
+                                rect = Rectangle((nxa, nya), nxb - nxa, nyb - nya, edgecolor='springgreen', fill=False)
+                                ax[0].add_patch(rect)
+                                ax[0].text(nxa, nya, val,
+                                        verticalalignment='bottom', horizontalalignment='left',
+                                        # transform=ax[0].transAxes,
+                                        color='springgreen', fontsize=9)
+                                ax[1].imshow(imsh)
                             rect_count += 1
-        print(rect_count)
+        # print(rect_count)
         tot_rects += rect_count
-        # plt.show()
-        plt.close()
+        print(tot_rects, cnt)
+        if PLOT:
+            plt.show()
+            plt.close()
 
     def show_compute_roi(image_path):
         img = Image.open(image_path)
         basewidth = 500
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
-        if img.size[0] > basewidth:
-            img = img.resize((basewidth, hsize), Image.LANCZOS)
         contrast = ImageEnhance.Contrast(img)
         mi = np.asarray(img).min()
         ma = np.asarray(img).max()
-        contrast_ratio = (325 / (ma - mi + 1))
+        contrast_ratio = (285 / (ma - mi + 1))
 
         orig_img = img = contrast.enhance(contrast_ratio)
 
+        if img.size[0] > basewidth:
+            img = img.resize((basewidth, hsize), Image.LANCZOS)
+
         # bw = ImageEnhance.Color(orig_img)
         # orig_img = bw.enhance(0)
-        #
+
         # sharp = ImageEnhance.Sharpness(orig_img)
         # orig_img = sharp.enhance(0.5)
-        #
-        # brightness = ImageEnhance.Brightness(orig_img)
-        # orig_img = brightness.enhance(2)
-        #
-        # o_contrast = ImageEnhance.Contrast(orig_img)
-        # orig_img = o_contrast.enhance(2)
-        #
+
+        brightness = ImageEnhance.Brightness(orig_img)
+        orig_img = brightness.enhance(1.3)
+
+        o_contrast = ImageEnhance.Contrast(orig_img)
+        orig_img = o_contrast.enhance(0.9)
+
         # sharp = ImageEnhance.Sharpness(orig_img)
-        # orig_img = sharp.enhance(2)
-
-        # img = np.asarray(img)
-        # R = img[:, :, 0]
-        # G = img[:, :, 1]
-        # B = img[:, :, 2]
-        # img2 = (np.minimum(np.minimum(R, G), B) + np.maximum(np.maximum(R, G), B))
-        # img = img2
+        # orig_img = sharp.enhance(1.2)
 
 
+        brightness = ImageEnhance.Brightness(img)
+        img = brightness.enhance(0.9)
+        img = np.array(img)
         img = np.dot(img, [0.299, 0.587, 0.114])
-        final_image = np.array(img)
+        final_image = img
         final_image = gaussian_filter(final_image, (np.size(final_image) ** 0.2) / 100)
         final_image = (final_image[:, :] / 255)
 
