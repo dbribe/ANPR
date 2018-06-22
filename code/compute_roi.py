@@ -13,7 +13,9 @@ from config import MERGE_STRIDE, REGION_THRESHOLD, LIGHT_THRESHOLD, REGION_STRID
 
 total = 0
 tot_rects = 0
-PLOT = False
+PLOT = True
+SAVEINDEX = 2
+SAVE = False
 
 class Blob(object):
     xa = 1e9
@@ -32,6 +34,8 @@ def main():
         global total
         global PLOT
         global tot_rects
+        global SAVEINDEX
+        global SAVE
         total += 1
         # A = gaussian_filter(A, 2)
         visited = np.zeros(np.shape(A))
@@ -40,11 +44,11 @@ def main():
         width = np.size(A,1)
         max_queue_size = height * width
 
-        fig, ax = plt.subplots(4)
+        fig, ax = plt.subplots(1)
         if PLOT:
 
             plt.gray()
-            # ax = [ax]
+            ax = [ax]
         rect_count = 0
         # ax.imshow(A)
 
@@ -58,15 +62,13 @@ def main():
                 if A[i][j] > light_threshold:
                     B[i][j] = min(np.amax(A[i-mr+1:i+mr, j-mr+1:j+mr]) * 1.3, 1)
 
-
-
         ax[0].imshow(img)
 
         blobs = B > FILL_THRESHOLD
         blobs_labels = measure.label(blobs, background=0, connectivity=1)
 
-        ax[2].imshow(B)
-        ax[3].imshow(blobs_labels)
+        # ax[2].imshow(B)
+        # ax[3].imshow(blobs_labels)
         # if PLOT:
         #     ax[3].imshow(blobs_labels)
         # print(blobs_labels)
@@ -127,7 +129,7 @@ def main():
                 cropped = np.flip(np.rot90(cropped, -1), 1)
                 cropped = np.expand_dims(cropped, axis=2)
                 val = single_decode(cropped)
-                # print(val)
+                print(val)
                 val = ''.join(val.split('_'))
 
                 rect = Rectangle((nxa, nya), nxb - nxa, nyb - nya, edgecolor='b', fill=False)
@@ -179,15 +181,17 @@ def main():
                             bbox=dict(facecolor='black', alpha=0.5),
                             # transform=ax[0].transAxes,
                             color='springgreen', fontsize=9)
-                    ax[1].imshow(imsh)
+                    # ax[1].imshow(imsh)
                 rect_count += 1
 
         if rect_count:
-            # fig.savefig('/Users/Dragonite/Programming/Repos/ANPR/detected/' + str(total) + '.png')
+            if SAVE:
+                fig.savefig('/Users/Dragonite/Programming/Repos/ANPR/detected/' + str(SAVEINDEX) + '/' + str(total) + '.png')
             tot_rects += 1
         else:
             tot_rects += 0
-            # img.save('/Users/Dragonite/Programming/Repos/ANPR/undetected/' + str(total) + '.png')
+            if SAVE:
+                img.save('/Users/Dragonite/Programming/Repos/ANPR/undetected/' + str(SAVEINDEX) + '/' + str(total) + '.png')
         print(str(tot_rects / total * 100) + '%', tot_rects, total)
 
         if PLOT:
@@ -197,7 +201,7 @@ def main():
 
     def show_compute_roi(image_path):
         img = Image.open(image_path)
-        basewidth = 400
+        basewidth = 500
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
         contrast = ImageEnhance.Contrast(img)
@@ -239,9 +243,9 @@ def main():
         cG = img[:, :, 1]
         cB = img[:, :, 2]
         img2 = np.minimum(np.minimum(cR, cG), cB)
-        img = 0.85 * img1 + 0.15 * img2
+        img = 1 * img1 + 0 * img2
         final_image = img
-        final_image = gaussian_filter(final_image, (np.size(final_image) ** 0.25) / 100)
+        final_image = gaussian_filter(final_image, (np.size(final_image) ** 0.2) / 100)
         final_image = (final_image[:, :] / 255)
 
         compute_roi(final_image, orig_img)

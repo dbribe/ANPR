@@ -281,7 +281,7 @@ def train(img_w, load=False, train=True):
     # the loss calc occurs elsewhere, so use a dummy lambda func for the loss
     model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
 
-    model.load_weights('models/model10.h5')
+    model.load_weights('models/model2.h5')
 
     return model
 
