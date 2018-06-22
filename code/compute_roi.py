@@ -13,7 +13,7 @@ from config import MERGE_STRIDE, REGION_THRESHOLD, LIGHT_THRESHOLD, REGION_STRID
 
 total = 0
 tot_rects = 0
-PLOT = True
+PLOT = False
 
 class Blob(object):
     xa = 1e9
@@ -40,7 +40,7 @@ def main():
         width = np.size(A,1)
         max_queue_size = height * width
 
-        fig, ax = plt.subplots(2)
+        fig, ax = plt.subplots(4)
         if PLOT:
 
             plt.gray()
@@ -53,16 +53,20 @@ def main():
         # print(light_threshold, dark_threshold)
 
         light_threshold = LIGHT_THRESHOLD
-
         for i in range(2,height-2):
             for j in range(2,width-2):
                 if A[i][j] > light_threshold:
                     B[i][j] = min(np.amax(A[i-mr+1:i+mr, j-mr+1:j+mr]) * 1.3, 1)
 
+
+
         ax[0].imshow(img)
 
         blobs = B > FILL_THRESHOLD
         blobs_labels = measure.label(blobs, background=0, connectivity=1)
+
+        ax[2].imshow(B)
+        ax[3].imshow(blobs_labels)
         # if PLOT:
         #     ax[3].imshow(blobs_labels)
         # print(blobs_labels)
@@ -98,7 +102,7 @@ def main():
             yc2 = list[i].yc2
             rect_width = xb - xa
             rect_height = yb - ya
-            if  rect_width >= 30 and rect_height >= 3 and rect_width >= 2.5 * rect_height \
+            if  rect_width >= 30 and rect_height >= 3 and rect_width >= 1.5 * rect_height \
                     and rect_width <= 7 * rect_height and  rect_width >= width / 32:
                 nxa = int(xa / width * img.size[0])
                 nxb = int(xb / width * img.size[0])
@@ -125,6 +129,11 @@ def main():
                 val = single_decode(cropped)
                 # print(val)
                 val = ''.join(val.split('_'))
+
+                rect = Rectangle((nxa, nya), nxb - nxa, nyb - nya, edgecolor='b', fill=False)
+                ax[0].add_patch(rect)
+                if len(val) >= 6:
+                    ax[1].imshow(imsh)
 
                 if len(val) > 0 and str.isdigit(val[0]):
                     val = 'B' + val
@@ -174,19 +183,21 @@ def main():
                 rect_count += 1
 
         if rect_count:
-            fig.savefig('/Users/Dragonite/Programming/Repos/ANPR/detected/' + str(total) + '.png')
+            # fig.savefig('/Users/Dragonite/Programming/Repos/ANPR/detected/' + str(total) + '.png')
             tot_rects += 1
         else:
-            img.save('/Users/Dragonite/Programming/Repos/ANPR/undetected/' + str(total) + '.png')
+            tot_rects += 0
+            # img.save('/Users/Dragonite/Programming/Repos/ANPR/undetected/' + str(total) + '.png')
         print(str(tot_rects / total * 100) + '%', tot_rects, total)
-        plt.close()
+
         if PLOT:
             plt.show()
+        plt.close()
 
 
     def show_compute_roi(image_path):
         img = Image.open(image_path)
-        basewidth = 500
+        basewidth = 400
         wpercent = (basewidth / float(img.size[0]))
         hsize = int((float(img.size[1]) * float(wpercent)))
         contrast = ImageEnhance.Contrast(img)
@@ -221,10 +232,16 @@ def main():
 
         brightness = ImageEnhance.Brightness(img)
         img = brightness.enhance(0.9)
-        img = np.array(img)
-        img = np.dot(img, [0.299, 0.587, 0.114])
+        # img = np.array(img)
+        img1 = np.dot(img, [0.299, 0.587, 0.114])
+        img = np.asarray(img)
+        cR = img[:, :, 0]
+        cG = img[:, :, 1]
+        cB = img[:, :, 2]
+        img2 = np.minimum(np.minimum(cR, cG), cB)
+        img = 0.85 * img1 + 0.15 * img2
         final_image = img
-        final_image = gaussian_filter(final_image, (np.size(final_image) ** 0.2) / 100)
+        final_image = gaussian_filter(final_image, (np.size(final_image) ** 0.25) / 100)
         final_image = (final_image[:, :] / 255)
 
         compute_roi(final_image, orig_img)
@@ -238,6 +255,8 @@ def main():
     #     show_compute_roi('huge' + str(i) + '.jpg')
     for filename in os.listdir('photos/'):
         show_compute_roi('photos/' + filename)
+    # for filename in os.listdir('undetected/'):
+    #     show_compute_roi('undetected/' + filename)
     # show_compute_roi('pic.png')
     # for filename in os.listdir('crops/'):
     #     if filename[0] != '.':
