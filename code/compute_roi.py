@@ -13,9 +13,9 @@ from config import MERGE_STRIDE, REGION_THRESHOLD, LIGHT_THRESHOLD, REGION_STRID
 
 total = 0
 tot_rects = 0
-PLOT = False
-SAVEINDEX = 2
-SAVE = False
+PLOT = True
+SAVEINDEX = 0
+SAVE = True
 SHOW = False
 
 class Blob(object):
