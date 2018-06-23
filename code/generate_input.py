@@ -41,7 +41,7 @@ def build_data(count, type='', show_only=True):
             img = brightness.enhance(1 + random.random() * 0.8)
             contrast = ImageEnhance.Contrast(img)
             img = contrast.enhance(2)
-            img = img.rotate(random.random() * 6 - 3, expand=0)
+            img = img.rotate(random.random() * 9 - 4.5, expand=0)
             # a = 1
             # b = 0
             # c = -1 -random.random() * 5  # left/right (i.e. 5/-5)
@@ -49,8 +49,8 @@ def build_data(count, type='', show_only=True):
             # e = 1
             # f = -random.random() * 3
             # img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
-            img = img.crop((int((random.random() * 2 - 1.1) * 8), int((random.random() * 2 - 1.1) * 9),
-                            int(128 - (random.random() * 2 - 1.1) * 10), int(64 - (random.random() * 2 - 1.3) * 8)))
+            img = img.crop((int((random.random() * 2 - 1.1) * 8), int((random.random() * 2 - .5) * 11),
+                            int(128 - (random.random() * 2 - .7) * 8), int(64 - (random.random() * 2 - 1) * 12)))
             img = img.filter(ImageFilter.GaussianBlur(0.9 + random.random() * 0.9))
 
             brightness = ImageEnhance.Brightness(img)
@@ -70,8 +70,8 @@ def build_data(count, type='', show_only=True):
 
 # build_data(10, 'test/')
 
-build_data(100, 'test12/', False)
-build_data(10000, 'train12/', False)
+build_data(100, 'test13/', False)
+build_data(10000, 'train13/', False)
 
 # DIR_PATH = 'dataset/plate/train6/'
 #

@@ -13,9 +13,10 @@ from config import MERGE_STRIDE, REGION_THRESHOLD, LIGHT_THRESHOLD, REGION_STRID
 
 total = 0
 tot_rects = 0
-PLOT = True
+PLOT = False
 SAVEINDEX = 2
 SAVE = False
+SHOW = False
 
 class Blob(object):
     xa = 1e9
@@ -24,6 +25,7 @@ class Blob(object):
     yb = 0
     xc1 = 0
     xc2 = 0
+    cnt = 0
     yc1 = -1e9
     yc2 = -1e9
 
@@ -36,27 +38,28 @@ def main():
         global tot_rects
         global SAVEINDEX
         global SAVE
+        global SHOW
         total += 1
-        # A = gaussian_filter(A, 2)
+
         visited = np.zeros(np.shape(A))
         B = A
         height = np.size(A,0)
         width = np.size(A,1)
         max_queue_size = height * width
 
-        fig, ax = plt.subplots(1)
+        fig, ax = plt.subplots(4)
         if PLOT:
 
             plt.gray()
-            ax = [ax]
+            # ax = [ax]
         rect_count = 0
-        # ax.imshow(A)
 
         mr = MERGE_STRIDE
 
         # print(light_threshold, dark_threshold)
 
         light_threshold = LIGHT_THRESHOLD
+
         for i in range(2,height-2):
             for j in range(2,width-2):
                 if A[i][j] > light_threshold:
@@ -67,10 +70,10 @@ def main():
         blobs = B > FILL_THRESHOLD
         blobs_labels = measure.label(blobs, background=0, connectivity=1)
 
-        # ax[2].imshow(B)
-        # ax[3].imshow(blobs_labels)
-        # if PLOT:
-        #     ax[3].imshow(blobs_labels)
+        ax[2].imshow(B)
+        ax[3].imshow(blobs_labels)
+        if PLOT:
+            ax[3].imshow(blobs_labels)
         # print(blobs_labels)
 
         B = blobs_labels
@@ -82,6 +85,7 @@ def main():
         for i in range(np.size(B,0)):
             for j in range(np.size(B,1)):
                 index = B[i][j]
+                list[index].cnt += 1
                 list[index].xa = min(list[index].xa, j)
                 list[index].ya = min(list[index].ya, i)
                 list[index].xb = max(list[index].xb, j)
@@ -102,17 +106,20 @@ def main():
             xc2 = list[i].xc2
             yc1 = list[i].yc1
             yc2 = list[i].yc2
+            cnt = list[i].cnt
             rect_width = xb - xa
             rect_height = yb - ya
-            if  rect_width >= 30 and rect_height >= 3 and rect_width >= 1.5 * rect_height \
-                    and rect_width <= 7 * rect_height and  rect_width >= width / 32:
+            if  rect_width >= 30 and rect_height >= 3 and rect_width >= 2 * rect_height \
+                    and rect_width <= 6 * rect_height and  rect_width >= width / 32 and\
+                    cnt > rect_width * rect_height / 4:
                 nxa = int(xa / width * img.size[0])
                 nxb = int(xb / width * img.size[0])
                 nya = int(ya / height * img.size[1])
                 nyb = int(yb/ height * img.size[1])
                 # print(nxa, nya, nxb, nyb, img.size[0], img.size[1])
-                cropped = img.crop((nxa, nya, nxb, nyb))
-                cropped = cropped.rotate(np.arctan((yc2 - yc1) / (xc2 - xc1)) / np.pi * 180, expand=0)
+                cropped = img.rotate(np.arctan((yc2 - yc1) / (xc2 - xc1)) / np.pi * 180, expand=0, center=(nxa + (nxb - nxa)/2, nya + (nyb - nya) / 2)).crop((nxa, nya, nxb, nyb))
+                # cropped = img.crop((nxa, nya, nxb, nyb))
+                # cropped = cropped.rotate(np.arctan((yc2 - yc1) / (xc2 - xc1)) / np.pi * 180, expand=0)
                 smth = int(abs(yc2 - yc1) / (yb - ya) * (nyb - nya) * .3)
                 # print("smth is", smth)
                 # print(nxa, nya, nxb, nyb)
@@ -123,17 +130,19 @@ def main():
                 cR = cropped[:, :, 0]
                 cG = cropped[:, :, 1]
                 cB = cropped[:, :, 2]
+
                 cropped = np.maximum(np.maximum(cR, cG), cB)
                 cropped = cropped[:, :] / 255
                 imsh = cropped
                 cropped = np.flip(np.rot90(cropped, -1), 1)
                 cropped = np.expand_dims(cropped, axis=2)
+
                 val = single_decode(cropped)
-                print(val)
                 val = ''.join(val.split('_'))
 
                 rect = Rectangle((nxa, nya), nxb - nxa, nyb - nya, edgecolor='b', fill=False)
                 ax[0].add_patch(rect)
+                # print(val)
                 if len(val) >= 6:
                     ax[1].imshow(imsh)
 
@@ -181,7 +190,7 @@ def main():
                             bbox=dict(facecolor='black', alpha=0.5),
                             # transform=ax[0].transAxes,
                             color='springgreen', fontsize=9)
-                    # ax[1].imshow(imsh)
+                    ax[1].imshow(imsh)
                 rect_count += 1
 
         if rect_count:
@@ -194,7 +203,7 @@ def main():
                 img.save('/Users/Dragonite/Programming/Repos/ANPR/undetected/' + str(SAVEINDEX) + '/' + str(total) + '.png')
         print(str(tot_rects / total * 100) + '%', tot_rects, total)
 
-        if PLOT:
+        if PLOT and SHOW:
             plt.show()
         plt.close()
 
