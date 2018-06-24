@@ -4,7 +4,7 @@
     <list default="true" id="712f7935-7205-4ece-8433-d80f9c97dfb9" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/compute_roi.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/compute_roi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/recognize.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/recognize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/generate_input.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/generate_input.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,8 +23,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+            <state relative-caret-position="238">
+              <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -32,8 +32,8 @@
       <file leaf-file-name="generate_input.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/generate_input.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="261" selection-start-line="9" selection-start-column="261" selection-end-line="9" selection-end-column="261" />
+            <state relative-caret-position="512">
+              <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -44,8 +44,8 @@
       <file leaf-file-name="compute_roi.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/code/compute_roi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="668">
-              <caret line="175" column="22" lean-forward="true" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
+            <state relative-caret-position="-271">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -53,11 +53,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="backend_bases.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.6/site-packages/matplotlib/backend_bases.py">
+      <file leaf-file-name="_label.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.6/site-packages/skimage/measure/_label.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="2279" column="28" selection-start-line="2279" selection-start-column="24" selection-end-line="2279" selection-end-column="28" />
+            <state relative-caret-position="45">
+              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Image.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/lib/python3.6/site-packages/PIL/Image.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="26490">
+              <caret line="1770" column="74" selection-start-line="1770" selection-start-column="74" selection-end-line="1770" selection-end-column="74" />
             </state>
           </provider>
         </entry>
@@ -65,8 +74,8 @@
       <file leaf-file-name="recognize.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/recognize.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3386">
-              <caret line="283" column="38" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
+            <state relative-caret-position="197">
+              <caret line="297" column="27" selection-start-line="297" selection-start-column="27" selection-end-line="297" selection-end-column="27" />
               <folding>
                 <element signature="e#215#227#0" expanded="true" />
               </folding>
@@ -85,9 +94,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self.n</find>
-      <find>path</find>
-      <find>prinf</find>
       <find>rect_count</find>
       <find>tools.</find>
       <find>downsample_factor</find>
@@ -109,12 +115,15 @@
       <find>xn</find>
       <find>xa</find>
       <find>model10</find>
-      <find>print</find>
       <find>cnt</find>
       <find>total</find>
       <find>st = R</find>
       <find>save</find>
       <find>plt.</find>
+      <find>print</find>
+      <find>center</find>
+      <find>rotate</find>
+      <find>ax[1].</find>
     </findStrings>
     <replaceStrings>
       <replace>center_x</replace>
@@ -150,8 +159,8 @@
         <option value="$PROJECT_DIR$/code/train.py" />
         <option value="$PROJECT_DIR$/code/ai_util.py" />
         <option value="$PROJECT_DIR$/plate_recognition.ipynb" />
-        <option value="$PROJECT_DIR$/code/generate_input.py" />
         <option value="$PROJECT_DIR$/code/config.py" />
+        <option value="$PROJECT_DIR$/code/generate_input.py" />
         <option value="$PROJECT_DIR$/code/recognize.py" />
         <option value="$PROJECT_DIR$/code/compute_roi.py" />
       </list>
@@ -163,8 +172,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="22" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="x" value="588" />
+    <option name="y" value="26" />
     <option name="width" value="1680" />
     <option name="height" value="1050" />
   </component>
@@ -173,6 +183,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -194,13 +205,33 @@
             <path>
               <item name="ANPR" type="b2602c69:ProjectViewProjectNode" />
               <item name="ANPR" type="462c0819:PsiDirectoryNode" />
+              <item name="dataset" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ANPR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ANPR" type="462c0819:PsiDirectoryNode" />
+              <item name="dataset" type="462c0819:PsiDirectoryNode" />
+              <item name="plate" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ANPR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ANPR" type="462c0819:PsiDirectoryNode" />
+              <item name="detected" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ANPR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ANPR" type="462c0819:PsiDirectoryNode" />
               <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ANPR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ANPR" type="462c0819:PsiDirectoryNode" />
+              <item name="undetected" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -220,15 +251,17 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/models" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/data/license_plates/test2" />
       <recent name="$PROJECT_DIR$/code" />
       <recent name="$PROJECT_DIR$/code/data" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/detected/0" />
+      <recent name="$PROJECT_DIR$/undetected/0" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -318,23 +351,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5017857" side_tool="true" weight="0.25350702" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50357145" side_tool="true" visible="true" weight="0.3987976" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3296593" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.3296593" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3296593" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49821427" visible="true" weight="0.18227665" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1078125" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49642858" visible="true" weight="0.3987976" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16369048" />
       <window_info anchor="bottom" id="Docker" order="7" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" weight="0.38690478" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997996" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -353,10 +385,67 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="7" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/code/recognize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4245">
+          <caret line="283" column="38" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
+          <folding>
+            <element signature="e#215#227#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/generate_input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1065">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/generate_input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="261" selection-start-line="9" selection-start-column="261" selection-end-line="9" selection-end-column="261" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/matplotlib/backend_bases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33840">
+          <caret line="2279" column="28" selection-start-line="2279" selection-start-column="24" selection-end-line="2279" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/recognize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4245">
+          <caret line="283" column="38" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
+          <folding>
+            <element signature="e#215#227#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/compute_roi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2715">
+          <caret line="181" column="19" lean-forward="true" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -567,13 +656,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/PIL/Image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="1750" column="46" selection-start-line="1750" selection-start-column="46" selection-end-line="1750" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.1/python_stubs/1437855905/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
@@ -588,51 +670,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/skimage/measure/_label.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="27" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/generate_input.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="261" selection-start-line="9" selection-start-column="261" selection-end-line="9" selection-end-column="261" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/recognize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3386">
-          <caret line="283" column="38" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
-          <folding>
-            <element signature="e#215#227#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.6/site-packages/matplotlib/axes/_base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1501">
           <caret line="2436" column="62" selection-start-line="2436" selection-start-column="58" selection-end-line="2436" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python3.6/site-packages/matplotlib/backend_bases.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="2279" column="28" selection-start-line="2279" selection-start-column="24" selection-end-line="2279" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -643,10 +684,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/matplotlib/backend_bases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="2279" column="28" selection-start-line="2279" selection-start-column="24" selection-end-line="2279" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/cairocffi/context.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="708" column="14" selection-start-line="708" selection-start-column="8" selection-end-line="708" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/PIL/Image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26490">
+          <caret line="1770" column="74" selection-start-line="1770" selection-start-column="74" selection-end-line="1770" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.6/site-packages/skimage/measure/_label.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detected/0/213.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="942" column="4" selection-start-line="942" selection-start-column="4" selection-end-line="942" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.1/python_stubs/1437855905/itertools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="396" column="8" selection-start-line="396" selection-start-column="8" selection-end-line="396" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/recognize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="297" column="27" selection-start-line="297" selection-start-column="27" selection-end-line="297" selection-end-column="27" />
+          <folding>
+            <element signature="e#215#227#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/generate_input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/code/compute_roi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="668">
-          <caret line="175" column="22" lean-forward="true" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
+        <state relative-caret-position="-271">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
