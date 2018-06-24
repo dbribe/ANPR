@@ -3,7 +3,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-from config import THREE_DIGITS_THRESHOLD
+from ANPR.code.config import THREE_DIGITS_THRESHOLD
 from random import choice
 from string import ascii_uppercase
 
@@ -70,8 +70,8 @@ def build_data(count, type='', show_only=True):
 
 # build_data(10, 'test/')
 
-build_data(100, 'test13/', False)
-build_data(10000, 'train13/', False)
+# build_data(100, 'test13/', False)
+# build_data(10000, 'train13/', False)
 
 # DIR_PATH = 'dataset/plate/train6/'
 #

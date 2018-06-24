@@ -54,35 +54,7 @@ test_folder = 'test10'
 
 from collections import Counter
 
-
-def get_counter(dirpath, tag):
-    dirname = os.path.basename(dirpath)
-    ann_dirpath = join(dirpath, 'ann')
-    letters = ''
-    lens = []
-    for filename in os.listdir(dirpath):
-        description = (''.join(filename.split('_')))[:-4]
-        if description == '.DSS':
-            continue
-        if len(description) <= 7:
-            lens.append(len(description))
-        letters += description
-    print('Max plate length in "%s":' % dirname, max(Counter(lens).keys()))
-    letters += '_'
-    return Counter(letters)
-
-
-c_val = get_counter('dataset/plate/' + test_folder, 'test')
-c_train = get_counter('dataset/plate/' + train_folder, 'train')
-letters_train = set(c_train.keys())
-letters_val = set(c_val.keys())
-# if letters_train == letters_val:
-#     print('Letters in train and val do match')
-# else:
-#     raise Exception()
-# print(len(letters_train), len(letters_val), len(letters_val | letters_train))
-letters = sorted(list(letters_train))
-print('Letters:', ' '.join(letters))
+letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
 
 
 def labels_to_text(labels):
@@ -98,106 +70,6 @@ def is_valid_str(s):
         if not ch in letters:
             return False
     return True
-
-
-class TextImageGenerator:
-    def __init__(self,
-                 dirpath,
-                 tag,
-                 img_w, img_h,
-                 batch_size,
-                 downsample_factor,
-                 max_text_len=7):
-
-        self.img_h = img_h
-        self.img_w = img_w
-        self.batch_size = batch_size
-        self.max_text_len = max_text_len
-        self.downsample_factor = downsample_factor
-
-        self.samples = []
-        letters = ''
-        for filename in os.listdir(dirpath):
-            name, ext = os.path.splitext(filename)
-            if len(name) < 3 or '.' in name:
-                continue
-            if ext in ['.png', '.jpg']:
-                img_filepath = join(dirpath, filename)
-                name = ''.join(name.split('_'))
-                while len(name) <= 6:
-                    name += '_'
-                if len(name) > 7:
-                    continue
-                if is_valid_str(name):
-                    self.samples.append([img_filepath, name])
-                letters += name
-        random.shuffle(self.samples)
-        # self.samples = self.samples[:100]
-        self.n = len(self.samples)
-        self.indexes = list(range(self.n))
-        self.cur_index = 0
-        letters = set(letters)
-        letters = sorted(list(letters))
-        print(' '.join(letters))
-
-    def build_data(self):
-        self.imgs = np.zeros((self.n, self.img_h, self.img_w))
-        self.texts = []
-        for i, (img_filepath, text) in enumerate(self.samples):
-            img = cv2.imread(img_filepath)
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img = cv2.resize(img, (self.img_w, self.img_h))
-            img = img.astype(np.float32)
-            img /= 255
-            # width and height are backwards from typical Keras convention
-            # because width is the time dimension when it gets fed into the RNN
-            self.imgs[i, :, :] = img
-            self.texts.append(text)
-
-    def get_output_size(self):
-        return len(letters) + 1
-
-    def next_sample(self):
-        self.cur_index += 1
-        if self.cur_index >= self.n:
-            self.cur_index = 0
-            random.shuffle(self.indexes)
-        return self.imgs[self.indexes[self.cur_index]], self.texts[self.indexes[self.cur_index]]
-
-    def next_batch(self):
-        while True:
-            # width and height are backwards from typical Keras convention
-            # because width is the time dimension when it gets fed into the RNN
-            if K.image_data_format() == 'channels_first':
-                X_data = np.ones([self.batch_size, 1, self.img_w, self.img_h])
-            else:
-                X_data = np.ones([self.batch_size, self.img_w, self.img_h, 1])
-            Y_data = np.ones([self.batch_size, self.max_text_len])
-            input_length = np.ones((self.batch_size, 1)) * (self.img_w // self.downsample_factor - 2)
-            label_length = np.zeros((self.batch_size, 1))
-            source_str = []
-
-            for i in range(self.batch_size):
-                img, text = self.next_sample()
-                img = img.T
-                if K.image_data_format() == 'channels_first':
-                    img = np.expand_dims(img, 0)
-                else:
-                    img = np.expand_dims(img, -1)
-                X_data[i] = img
-                Y_data[i] = text_to_labels(text)
-                source_str.append(text)
-                label_length[i] = len(text)
-
-            inputs = {
-                'the_input': X_data,
-                'the_labels': Y_data,
-                'input_length': input_length,
-                'label_length': label_length,
-                # 'source_str': source_str
-            }
-            outputs = {'ctc': np.zeros([self.batch_size])}
-            yield (inputs, outputs)
 
 
 def ctc_lambda_func(args):
@@ -226,12 +98,6 @@ def train(img_w, load=False, train=True):
 
     batch_size = 32
     downsample_factor = pool_size ** 2
-    tiger_train = TextImageGenerator('dataset/plate/' + train_folder, 'train', img_w, img_h, batch_size,
-                                     downsample_factor)
-    tiger_train.build_data()
-    tiger_val = TextImageGenerator('dataset/plate/' + train_folder, 'val', img_w, img_h, batch_size,
-                                   downsample_factor)
-    tiger_val.build_data()
 
     act = 'relu'
     input_data = Input(name='the_input', shape=input_shape, dtype='float32')
@@ -261,12 +127,12 @@ def train(img_w, load=False, train=True):
         gru1_merged)
 
     # transforms RNN output to character activations:
-    inner = Dense(tiger_train.get_output_size(), kernel_initializer='he_normal',
+    inner = Dense(38, kernel_initializer='he_normal',
                   name='dense2')(concatenate([gru_2, gru_2b]))
     y_pred = Activation('softmax', name='softmax')(inner)
     Model(inputs=input_data, outputs=y_pred).summary()
 
-    labels = Input(name='the_labels', shape=[tiger_train.max_text_len], dtype='float32')
+    labels = Input(name='the_labels', shape=[7], dtype='float32')
     input_length = Input(name='input_length', shape=[1], dtype='int64')
     label_length = Input(name='label_length', shape=[1], dtype='int64')
     # Keras doesn't currently support loss funcs with extra parameters
@@ -281,7 +147,7 @@ def train(img_w, load=False, train=True):
     # the loss calc occurs elsewhere, so use a dummy lambda func for the loss
     model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer=sgd)
 
-    model.load_weights('models/model2.h5')
+    model.load_weights('ANPR/models/model2.h5')
 
     return model
 
@@ -304,14 +170,6 @@ def decode_batch(out):
         ret.append(outstr)
     return ret
 
-
-# from google.colab import files
-# !rm model9.h5
-# model.save_weights('model11.h5')
-# files.download('model11.h5')
-
-tiger_test = TextImageGenerator('dataset/plate/train2/', 'test', 128, 64, 150, 4)
-tiger_test.build_data()
 
 net_inp = model.get_layer(name='the_input').input
 net_out = model.get_layer(name='softmax').output
